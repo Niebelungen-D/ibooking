@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huawei.ibooking.mgb.mapper.StudyroomMapper">
+  <resultMap id="BaseResultMap" type="com.huawei.ibooking.bean.po.Studyroom">
+    <id column="studyroom_id" jdbcType="INTEGER" property="studyroomId" />
+    <result column="room_status" jdbcType="BIT" property="roomStatus" />
+    <result column="studyroom_number" jdbcType="INTEGER" property="studyroomNumber" />
+    <result column="building_id" jdbcType="INTEGER" property="buildingId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    studyroom_id, room_status, studyroom_number, building_id
+  </sql>
+  <select id="selectByExample" parameterType="com.huawei.ibooking.bean.po.StudyroomExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `studyroom`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `studyroom`
+    where studyroom_id = #{studyroomId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `studyroom`
+    where studyroom_id = #{studyroomId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.huawei.ibooking.bean.po.StudyroomExample">
+    delete from `studyroom`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.huawei.ibooking.bean.po.Studyroom">
+    insert into `studyroom` (studyroom_id, room_status, studyroom_number, 
+      building_id)
+    values (#{studyroomId,jdbcType=INTEGER}, #{roomStatus,jdbcType=BIT}, #{studyroomNumber,jdbcType=INTEGER}, 
+      #{buildingId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huawei.ibooking.bean.po.Studyroom">
+    insert into `studyroom`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studyroomId != null">
+        studyroom_id,
+      </if>
+      <if test="roomStatus != null">
+        room_status,
+      </if>
+      <if test="studyroomNumber != null">
+        studyroom_number,
+      </if>
+      <if test="buildingId != null">
+        building_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studyroomId != null">
+        #{studyroomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomStatus != null">
+        #{roomStatus,jdbcType=BIT},
+      </if>
+      <if test="studyroomNumber != null">
+        #{studyroomNumber,jdbcType=INTEGER},
+      </if>
+      <if test="buildingId != null">
+        #{buildingId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.huawei.ibooking.bean.po.StudyroomExample" resultType="java.lang.Long">
+    select count(*) from `studyroom`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update `studyroom`
+    <set>
+      <if test="row.studyroomId != null">
+        studyroom_id = #{row.studyroomId,jdbcType=INTEGER},
+      </if>
+      <if test="row.roomStatus != null">
+        room_status = #{row.roomStatus,jdbcType=BIT},
+      </if>
+      <if test="row.studyroomNumber != null">
+        studyroom_number = #{row.studyroomNumber,jdbcType=INTEGER},
+      </if>
+      <if test="row.buildingId != null">
+        building_id = #{row.buildingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update `studyroom`
+    set studyroom_id = #{row.studyroomId,jdbcType=INTEGER},
+      room_status = #{row.roomStatus,jdbcType=BIT},
+      studyroom_number = #{row.studyroomNumber,jdbcType=INTEGER},
+      building_id = #{row.buildingId,jdbcType=INTEGER}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huawei.ibooking.bean.po.Studyroom">
+    update `studyroom`
+    <set>
+      <if test="roomStatus != null">
+        room_status = #{roomStatus,jdbcType=BIT},
+      </if>
+      <if test="studyroomNumber != null">
+        studyroom_number = #{studyroomNumber,jdbcType=INTEGER},
+      </if>
+      <if test="buildingId != null">
+        building_id = #{buildingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where studyroom_id = #{studyroomId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huawei.ibooking.bean.po.Studyroom">
+    update `studyroom`
+    set room_status = #{roomStatus,jdbcType=BIT},
+      studyroom_number = #{studyroomNumber,jdbcType=INTEGER},
+      building_id = #{buildingId,jdbcType=INTEGER}
+    where studyroom_id = #{studyroomId,jdbcType=INTEGER}
+  </update>
+</mapper>

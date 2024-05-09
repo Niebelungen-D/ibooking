@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huawei.ibooking.mgb.mapper.CheckRecordMapper">
+  <resultMap id="BaseResultMap" type="com.huawei.ibooking.bean.po.CheckRecord">
+    <id column="check_id" jdbcType="INTEGER" property="checkId" />
+    <result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+    <result column="reservation_id" jdbcType="INTEGER" property="reservationId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    check_id, check_time, reservation_id
+  </sql>
+  <select id="selectByExample" parameterType="com.huawei.ibooking.bean.po.CheckRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `check_record`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `check_record`
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `check_record`
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.huawei.ibooking.bean.po.CheckRecordExample">
+    delete from `check_record`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.huawei.ibooking.bean.po.CheckRecord">
+    insert into `check_record` (check_id, check_time, reservation_id
+      )
+    values (#{checkId,jdbcType=INTEGER}, #{checkTime,jdbcType=TIMESTAMP}, #{reservationId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.huawei.ibooking.bean.po.CheckRecord">
+    insert into `check_record`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="checkId != null">
+        check_id,
+      </if>
+      <if test="checkTime != null">
+        check_time,
+      </if>
+      <if test="reservationId != null">
+        reservation_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="checkId != null">
+        #{checkId,jdbcType=INTEGER},
+      </if>
+      <if test="checkTime != null">
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservationId != null">
+        #{reservationId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.huawei.ibooking.bean.po.CheckRecordExample" resultType="java.lang.Long">
+    select count(*) from `check_record`
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update `check_record`
+    <set>
+      <if test="row.checkId != null">
+        check_id = #{row.checkId,jdbcType=INTEGER},
+      </if>
+      <if test="row.checkTime != null">
+        check_time = #{row.checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.reservationId != null">
+        reservation_id = #{row.reservationId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update `check_record`
+    set check_id = #{row.checkId,jdbcType=INTEGER},
+      check_time = #{row.checkTime,jdbcType=TIMESTAMP},
+      reservation_id = #{row.reservationId,jdbcType=INTEGER}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huawei.ibooking.bean.po.CheckRecord">
+    update `check_record`
+    <set>
+      <if test="checkTime != null">
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservationId != null">
+        reservation_id = #{reservationId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huawei.ibooking.bean.po.CheckRecord">
+    update `check_record`
+    set check_time = #{checkTime,jdbcType=TIMESTAMP},
+      reservation_id = #{reservationId,jdbcType=INTEGER}
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </update>
+</mapper>
