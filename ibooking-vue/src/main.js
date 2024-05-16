@@ -8,17 +8,27 @@ Vue.use(VueResource);
 
 import App from './App.vue'
 
+const Index = require('./components/index.vue')
+
 const AllStudents = require('./components/all-students.vue');
 const AddStudent = require('./components/add-student.vue');
 const EditStudent = require('./components/edit-student.vue');
 const DeleteStudent = require('./components/delete-student.vue');
+
 const AllStudyRooms = require('./components/all-studyrooms.vue');
+
+const Login = require('./components/login.vue');
 
 const routes = [
     {
-        name: 'all_students',
+        name: 'index',
         path: '/',
-        component: AllStudents
+        component: Index,
+    },
+    {
+        name: 'login',
+        path: '/login',
+        component: Login
     },
     {
         name: 'all_students',
