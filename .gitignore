@@ -32,3 +32,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### VUE ###
+/ibooking-vue/node_modules/
+/ibooking-vue/dist/
