@@ -11,8 +11,8 @@ public class WebConfigurer implements WebMvcConfigurer {
         WebMvcConfigurer.super.addCorsMappings(registry);
 
         registry.addMapping("/**")
-                .allowCredentials(true)
-                .allowedOrigins("http://localhost:8080")
+                .allowedOriginPatterns("http://localhost:8090")  // 使用 allowedOriginPatterns 替代 allowedOrigins
+                .allowCredentials(false)
                 .allowedMethods("POST", "PUT", "OPTIONS", "DELETE", "GET")
                 .allowedHeaders("*")
                 .maxAge(3600);

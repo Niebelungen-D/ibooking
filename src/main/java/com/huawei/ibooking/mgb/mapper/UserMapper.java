@@ -3,8 +3,11 @@ package com.huawei.ibooking.mgb.mapper;
 import com.huawei.ibooking.bean.po.User;
 import com.huawei.ibooking.bean.po.UserExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface UserMapper {
     long countByExample(UserExample example);
 
