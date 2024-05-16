@@ -33,6 +33,9 @@ build/
 ### VS Code ###
 .vscode/
 
+src/main/resources/application.yml
+src/main/resources/generator.properties
+
 ### VUE ###
 /ibooking-vue/node_modules/
 /ibooking-vue/dist/
