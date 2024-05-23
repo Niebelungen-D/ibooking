@@ -19,4 +19,9 @@ public class UserServiceImpl implements UserService {
     public List<User> selectByExample(UserExample example) {
         return userMapper.selectByExample(example);
     }
+
+    @Override
+    public int insert(User record) {
+        return userMapper.insert(record);
+    }
 }

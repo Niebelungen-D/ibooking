@@ -11,4 +11,6 @@ public interface UserService {
 
     List<User> selectByExample(UserExample example);
 
+    int insert(User record);
+
 }

@@ -1,4 +1,4 @@
-package com.huawei.ibooking.enums;
+package com.huawei.ibooking.bean.enums;
 
 
 public enum ResponseEnum {

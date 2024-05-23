@@ -1,10 +1,11 @@
 package com.huawei.ibooking.controller;
 
+import com.huawei.ibooking.bean.enums.RoleEnum;
 import com.huawei.ibooking.bean.po.User;
 import com.huawei.ibooking.bean.po.UserExample;
 import com.huawei.ibooking.bean.vo.user.SecurityUser;
 import com.huawei.ibooking.commons.JsonResult;
-import com.huawei.ibooking.enums.ResponseEnum;
+import com.huawei.ibooking.bean.enums.ResponseEnum;
 import com.huawei.ibooking.serivce.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -18,6 +19,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @Api(value = "用户权限控制", tags = {"用户权限控制"})
+@RequestMapping("/api/v1/auth")
 public class UserController {
 
     @Autowired
@@ -49,6 +51,31 @@ public class UserController {
                 .setUserEmail(user.getUserEmail())
                 .setUserRole(user.getUserRole());
         return new JsonResult<>(securityUser);
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public JsonResult<Object> register(
+            @ApiParam(required = true) @RequestParam(name = "username") String username,
+            @ApiParam(required = true) @RequestParam(name = "password") String password,
+            @ApiParam(required = true) @RequestParam(name = "useremail") String userEmail,
+            @ApiParam(required = true) @RequestParam(name = "userHeadimg") String userHeadimg
+    ) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andUserNameEqualTo(username);
+        List<User> adminUsers = userService.selectByExample(example);
+        if (!adminUsers.isEmpty()) {
+            return new JsonResult<>(ResponseEnum.USER_ALREADY_REGISTERED);
+        }
+
+        User user = new User();
+        user.setUserName(username);
+        user.setUserEmail(userEmail);
+        user.setUserHeadimg(userHeadimg);
+        user.setUserPwd(password);
+        user.setUserRole(RoleEnum.NORMAL_USER.getCode());
+        userService.insert(user);
+        return new JsonResult<>(ResponseEnum.REGISTER_SUCCESS);
     }
 
 }
