@@ -34,5 +34,6 @@ export var booking_store = {
 }
 
 export var meta = {
-    url:"http://10.177.31.135:7001"
+    // url:"http://10.177.31.135:7001"
+    url:"http://111.231.21.144:8090"
 }

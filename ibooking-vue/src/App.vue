@@ -28,6 +28,7 @@
             <template v-if="user_store.log_status == 0">
             
             <li><router-link to="/login" >登录</router-link></li>
+            <li><router-link to="/register" >注册</router-link></li>
             </template>
             <template v-if="user_store.log_status == 1">
               <p class="navbar-text">用户{{user_store.name}}</p>

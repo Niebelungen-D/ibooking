@@ -18,6 +18,7 @@ const DeleteStudent = require('./components/delete-student.vue');
 const AllStudyRooms = require('./components/all-studyrooms.vue');
 
 const Login = require('./components/login.vue');
+const Register = require('./components/register.vue');
 
 const routes = [
     {
@@ -29,6 +30,11 @@ const routes = [
         name: 'login',
         path: '/login',
         component: Login
+    },
+    {
+        name: 'register',
+        path: '/register',
+        component: Register
     },
     {
         name: 'all_students',

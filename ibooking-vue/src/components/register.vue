@@ -1,8 +1,8 @@
 <template>
-    <div id="login">
-        <h1>登录</h1>
+    <div id="register">
+        <h1>注册</h1>
         <notification v-bind:notifications="notifications"></notification>
-        <form v-on:submit.prevent="login">
+        <form v-on:submit.prevent="register">
         <div class="form-group">
           <label name="student_name">姓名</label>
           <input
@@ -24,13 +24,23 @@
             required
           />
         </div>
+
+        <div class="form-group">
+          <label name="password_again">再次输入密码</label>
+          <input
+            type="password"
+            class="form-control"
+            v-model="post_data.userPwdAgain"
+            id="password"
+            required
+          />
+        </div>
   
         <div class="form-group">
-          <button class="btn btn-primary">登录</button>
-          <router-link to="/register" class="btn btn-primary">注册</router-link>
+          <button class="btn btn-primary">注册</button>
+          <router-link to="/login" class="btn btn-primary">返回登录</router-link>
         </div>
       </form>
-      
     </div>
 </template>
 
@@ -46,13 +56,21 @@ export default {
             post_data:{
                 userName:"",
                 userPwd:"",
+                userPwdAgain:""
             },
             notifications:[]
         }
     },
     methods: {
-    login: function () {
-      var url = meta.url + "/api/login";
+    register: function () {
+      if (this.post_data.userPwdAgain != this.post_data.userPwd){
+          this.notifications.push({
+            type: "danger",
+            message: "两次密码输入不同",
+          });
+        return
+      }
+      var url = meta.url + "/api/register";
       var that = this;
       this.$http
         .post(url, {username:this.post_data.userName,password:this.post_data.userPwd}, {
@@ -62,7 +80,7 @@ export default {
         })
         .then(
           (response) => {
-            console.log("login response=", response);
+            console.log("register response=", response);
             if (response.body.status == true){
               var data = response.body.data;
               if (data.userPermission == "user"){
@@ -76,7 +94,7 @@ export default {
               user_store.password = that.post_data.userPwd;
               this.notifications.push({
                 type: 'success',
-                message: "登录成功",
+                message: "注册成功",
               });
               //console.log("headers=", response.headers);
               that.$cookies.set("id", user_store.id);
@@ -94,7 +112,7 @@ export default {
           (response) => {
             this.notifications.push({
               type: "danger",
-              message: "登录失败",
+              message: "注册失败",
             });
           }
         );
