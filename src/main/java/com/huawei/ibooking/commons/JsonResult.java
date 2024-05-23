@@ -1,6 +1,6 @@
 package com.huawei.ibooking.commons;
 
-import com.huawei.ibooking.enums.ResponseEnum;
+import com.huawei.ibooking.bean.enums.ResponseEnum;
 
 import java.io.Serializable;
 
