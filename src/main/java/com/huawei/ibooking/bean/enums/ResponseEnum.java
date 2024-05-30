@@ -74,6 +74,8 @@ public enum ResponseEnum {
     DUPLICATE_CONTENT("3033", "提交重复内容"),
     TOKEN_ERROR("3034", "access_token获取失败"),
 
+    STUDY_ROOM_EXIST("3035", "自习室已存在"),
+
 
     //Client Error 4xxx  客户端错误  仿照4xx的http错误
     BAD_REQUEST("4000", "错误的请求参数"),
