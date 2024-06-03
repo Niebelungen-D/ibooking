@@ -7,7 +7,7 @@ import com.huawei.ibooking.bean.vo.Seat.SeatInformation;
 
 public interface SeatService {
 
-    PageInfo<SeatInformation> selectByExample(SeatExample example);
+    PageInfo<SeatInformation> selectByExample(SeatExample example, Integer pageNum, Integer pageSize, String sort);
 
     int insert(Seat seat);
 
