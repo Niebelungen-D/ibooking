@@ -1,5 +1,6 @@
 package com.huawei.ibooking.controller;
 
+import com.huawei.ibooking.bean.dto.user.LoginRequest;
 import com.huawei.ibooking.bean.enums.RoleEnum;
 import com.huawei.ibooking.bean.po.User;
 import com.huawei.ibooking.bean.po.UserExample;
@@ -30,9 +31,10 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public JsonResult<SecurityUser> login(
-            @ApiParam(required = true) @RequestParam(name = "username") String username,
-            @ApiParam(required = true) @RequestParam(name = "password") String password
+            @ApiParam(required = true) @RequestBody LoginRequest loginRequest
     ) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andUserNameEqualTo(username);

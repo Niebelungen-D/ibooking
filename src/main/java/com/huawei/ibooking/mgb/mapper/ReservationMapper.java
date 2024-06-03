@@ -1,5 +1,6 @@
 package com.huawei.ibooking.mgb.mapper;
 
+import com.huawei.ibooking.bean.Do.reservation.ReservationSQLResult;
 import com.huawei.ibooking.bean.po.Reservation;
 import com.huawei.ibooking.bean.po.ReservationExample;
 import java.util.List;
@@ -27,4 +28,11 @@ public interface ReservationMapper {
     int updateByPrimaryKeySelective(Reservation row);
 
     int updateByPrimaryKey(Reservation row);
+
+    List<ReservationSQLResult> selectAllReservationsByCondition(
+            @Param("userName") String userName,
+            @Param("buildingName") String buildingName,
+            @Param("startTime") String startTime,
+            @Param("endTime") String endTime,
+            @Param("orderByClause") String orderByClause);
 }
