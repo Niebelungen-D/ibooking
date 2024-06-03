@@ -5,7 +5,7 @@ import com.huawei.ibooking.bean.enums.ResponseEnum;
 import com.huawei.ibooking.bean.enums.CheckStatusEnum;
 import com.huawei.ibooking.bean.po.CheckRecord;
 import com.huawei.ibooking.bean.po.CheckRecordExample;
-import com.huawei.ibooking.bean.vo.check.CheckRecordInformation;
+import com.huawei.ibooking.bean.vo.check.CheckInformation;
 // import com.huawei.ibooking.bean.vo.studyroom.StudyRoomInformation;
 import com.huawei.ibooking.commons.JsonResult;
 // import com.huawei.ibooking.serivce.StudyroomService;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/check")
 @Api(value = "签到管理", tags = {"用户端签到管理"})
-public class CheckRecordController {
+public class CheckController {
 
     @Autowired
     CheckRecordService checkRecordService;
@@ -29,7 +29,7 @@ public class CheckRecordController {
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ApiOperation(value = "查询签到状态", tags = "查询签到状态")
     public JsonResult<PageInfo<StudyRoomInformation>> getStudyRoomList(
-            @ApiParam(required = false) @RequestParam(name = "reservationId", required = false) Boolean reservationId,
+            @ApiParam(required = false) @RequestParam(name = "reservationId", required = false) Boolean reservationId
     ) {
         CheckRecordExample checkRecordExample = new CheckRecordExample();
         CheckRecordExample.Criteria criteria = checkRecordExample.createCriteria();
