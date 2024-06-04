@@ -8,6 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 public class StudyRoomInformation {
 
+    private Integer studyroomId;
+
     private Boolean roomStatus;
 
     private Integer studyroomNumber;

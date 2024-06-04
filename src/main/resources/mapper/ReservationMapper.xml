@@ -255,4 +255,51 @@
       studyroom_id = #{studyroomId,jdbcType=INTEGER}
     where r_id = #{rId,jdbcType=INTEGER}
   </update>
+
+
+  <select id="selectAllReservationsByCondition" resultType="com.huawei.ibooking.bean.Do.reservation.ReservationSQLResult">
+    SELECT r.r_id AS reservation_id, r.start_time, r.end_time, r.is_checkin,
+    s.seat_id AS seat_id, s.has_socket,
+    u.user_id AS user_id, u.user_name, u.user_email,
+    b.building_id AS building_id, b.building_name,
+    st.studyroom_id AS studyroom_id, st.room_status, st.studyroom_number
+    FROM reservation r
+    JOIN seat s ON r.seat_id = s.seat_id
+    JOIN user u ON r.user_id = u.user_id
+    JOIN building b ON r.building_id = b.building_id
+    JOIN studyroom st ON r.studyroom_id = st.studyroom_id
+    <where>
+      <!-- 之前的条件 -->
+      <if test="userName != null and userName != ''">
+        u.user_name LIKE CONCAT('%', #{userName}, '%')
+      </if>
+      <if test="buildingName != null and buildingName != ''">
+        AND b.building_name LIKE CONCAT('%', #{buildingName}, '%')
+      </if>
+      <if test="startTime != null and endTime != null">
+        AND r.start_time BETWEEN #{startTime} AND #{endTime}
+      </if>
+    </where>
+    <if test="orderByClause != null">
+      ORDER BY ${orderByClause}
+    </if>
+  </select>
+  <!-- 检查座位在指定时间段内是否已被预约 -->
+  <select id="countConflictingReservations" resultType="int">
+    SELECT COUNT(*)
+    FROM reservation
+    <where>
+      <if test="seatId != null and seatId != 0">
+        seat_id = #{seatId}
+      </if>
+      <if test="startTime != null">
+        AND end_time &gt; #{startTime}
+      </if>
+      <if test="endTime != null">
+        AND start_time &lt; #{endTime}
+      </if>
+    </where>
+  </select>
+
+
 </mapper>

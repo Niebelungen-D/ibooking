@@ -32,6 +32,7 @@ public class StudyroomServiceImpl implements StudyroomService {
                     info.setRoomStatus(studyroom.getRoomStatus());
                     info.setStudyroomNumber(studyroom.getStudyroomNumber());
                     info.setBuildingId(studyroom.getBuildingId());
+                    info.setStudyroomId(studyroom.getStudyroomId());
                     return info;
                 })
                 .forEach(studyRoomInformationList::add);

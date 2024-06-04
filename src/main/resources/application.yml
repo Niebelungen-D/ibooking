@@ -25,6 +25,6 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.huawei.ibooking.bean.po
 
-#logging:
-#  level:
-#    com.huawei.ibooking: debug
+logging:
+  level:
+    com.huawei.ibooking: debug

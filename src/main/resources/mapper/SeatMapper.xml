@@ -6,6 +6,14 @@
     <result column="has_socket" jdbcType="TINYINT" property="hasSocket" />
     <result column="studyroom_id" jdbcType="INTEGER" property="studyroomId" />
   </resultMap>
+
+  <resultMap id="SeatStatusMap" type="com.huawei.ibooking.bean.Do.seat.QuerySeatResult">
+    <id column="seat_id" jdbcType="INTEGER" property="seatId" />
+    <result column="studyroom_id" jdbcType="INTEGER" property="studyroomId" />
+    <result column="is_booking" jdbcType="INTEGER" property="isBooking" />
+    <result column="has_socket" jdbcType="TINYINT" property="hasSocket"/>
+  </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -178,4 +186,32 @@
       studyroom_id = #{studyroomId,jdbcType=INTEGER}
     where seat_id = #{seatId,jdbcType=INTEGER}
   </update>
+
+  <select id="getSeatBookingStatus" resultMap="SeatStatusMap">
+    <!-- 查询有预约的座位 -->
+    SELECT DISTINCT seat_id, studyroom_id, has_socket, is_booking
+    FROM (
+      SELECT s.seat_id, s.studyroom_id, s.has_socket, 'true' as is_booking
+      FROM seat s
+      JOIN reservation r ON s.seat_id = r.seat_id
+      WHERE s.studyroom_id = #{studyroomId}
+      AND r.start_time >= #{startTime}
+      AND r.end_time &lt; DATE_ADD(#{startTime}, INTERVAL 1 DAY)
+
+      UNION ALL
+
+      <!-- 查询没有预约的座位 -->
+      SELECT seat_id, studyroom_id, has_socket, 'false' AS is_booking
+      FROM seat
+      WHERE seat_id NOT IN (
+      SELECT DISTINCT seat_id
+      FROM reservation r
+      WHERE studyroom_id = #{studyroomId}
+      AND r.start_time >= #{startTime}
+      AND r.end_time &lt; DATE_ADD(#{startTime}, INTERVAL 1 DAY)
+      )
+    ) AS combined
+  </select>
+
+
 </mapper>

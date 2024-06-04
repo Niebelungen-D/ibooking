@@ -1,6 +1,8 @@
 package com.huawei.ibooking.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.huawei.ibooking.bean.dto.studyroom.InsertStudyroomRequest;
+import com.huawei.ibooking.bean.dto.studyroom.SwitchStudyroomRequest;
 import com.huawei.ibooking.bean.enums.ResponseEnum;
 import com.huawei.ibooking.bean.enums.StudyRoomStatusEnum;
 import com.huawei.ibooking.bean.po.Studyroom;
@@ -56,14 +58,14 @@ public class StudyRoomController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ApiOperation(value = "新增自习室", tags = "新增自习室")
     public JsonResult<Object>insert(
-            @ApiParam(required = true) @RequestParam(name = "roomStatus", required = true) Boolean roomStatus,
-            @ApiParam(required = true) @RequestParam(name = "studyroomNumber", required = true) Integer  studyroomNumer,
-            @ApiParam(required = true) @RequestParam(name = "buildingId", required = true) Integer buildingId
+            @ApiParam(required = true) @RequestBody InsertStudyroomRequest insertStudyroomRequest
     ) {
+        Integer studyroomNumber = insertStudyroomRequest.getStudyroomNumber();
+        Integer buildingId = insertStudyroomRequest.getBuildingId();
         StudyroomExample studyroomExample = new StudyroomExample();
         StudyroomExample.Criteria criteria = studyroomExample.createCriteria();
-        if (!ObjectUtils.isEmpty(studyroomNumer)) {
-            criteria.andStudyroomNumberEqualTo(studyroomNumer);
+        if (!ObjectUtils.isEmpty(studyroomNumber)) {
+            criteria.andStudyroomNumberEqualTo(studyroomNumber);
         }
 
         if (!ObjectUtils.isEmpty(buildingId)) {
@@ -77,7 +79,7 @@ public class StudyRoomController {
         studyroom.setBuildingId(buildingId);
         // 新创建自习室，都是关闭状态
         studyroom.setRoomStatus(StudyRoomStatusEnum.CLOSE.getStatus());
-        studyroom.setStudyroomNumber(studyroomNumer);
+        studyroom.setStudyroomNumber(studyroomNumber);
         int insert = studyroomService.insert(studyroom);
         if (insert >= 1) {
             return new JsonResult<>(ResponseEnum.OPERATE_SUCCESS);
@@ -91,16 +93,21 @@ public class StudyRoomController {
     @RequestMapping(value = "/switch", method = RequestMethod.POST)
     @ApiOperation(value = "切换自习室状态", tags = "切换自习室状态")
     public JsonResult<Object>update(
-            @ApiParam(required = true) @RequestParam(name = "studyroomId", required = true) Integer studyroomId,
-            @ApiParam(required = true) @RequestParam(name = "roomStatus", required = true) Boolean roomStatus
+//            @ApiParam(required = true) @RequestParam(name = "studyroomId", required = true) Integer studyroomId,
+//            @ApiParam(required = true) @RequestParam(name = "roomStatus", required = true) Boolean roomStatus
+            @ApiParam(required = true) @RequestBody SwitchStudyroomRequest switchStudyroomRequest
     ) {
+        Integer studyroomId = switchStudyroomRequest.getStudyroomId();
+        Boolean roomStatus = switchStudyroomRequest.getRoomStatus();
+
 
         StudyroomExample example = new StudyroomExample();
         StudyroomExample.Criteria criteria = example.createCriteria();
         criteria.andStudyroomIdEqualTo(studyroomId);
         Studyroom studyroom = new Studyroom();
         studyroom.setRoomStatus(roomStatus);
-        int update = studyroomService.updateByExample(studyroom, example);
+        studyroom.setStudyroomId(studyroomId);
+        int update = studyroomService.updateByExampleSelective(studyroom, example);
         if (update >= 1) {
             return new JsonResult<>(ResponseEnum.OPERATE_SUCCESS);
         } else {

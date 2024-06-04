@@ -3,11 +3,10 @@ package com.huawei.ibooking.serivce;
 import com.github.pagehelper.PageInfo;
 import com.huawei.ibooking.bean.po.CheckRecord;
 import com.huawei.ibooking.bean.po.CheckRecordExample;
-import com.huawei.ibooking.bean.vo.check.CheckRecordInformation;
 
 public interface CheckRecordService {
 
-    PageInfo<StudyRoomInformation> selectByExample(CheckRecordExample example);
+    PageInfo<CheckRecord> selectByExample(CheckRecordExample example, Integer pageNum, Integer pageSize);
 
     int insert(CheckRecord record);
 
@@ -27,6 +26,6 @@ public interface CheckRecordService {
 
     int deleteByExample(CheckRecordExample example);
 
-
+    Boolean checkRecord(Integer reservationId);
 
 }

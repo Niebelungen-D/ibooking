@@ -6,10 +6,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SeatStatusEnum {
-    OPEN(true, "桌位已预约"),
-    CLOSE(false, "桌位未预约");
+    OPEN((byte) 1, "桌位已预约"),
+    CLOSE((byte) 0, "桌位未预约");
 
-    private final Boolean status;
+    private final Byte status;
 
     private final String description;
 
