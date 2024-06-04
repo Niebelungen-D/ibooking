@@ -3,6 +3,9 @@ package com.huawei.ibooking.mgb.mapper;
 import com.huawei.ibooking.bean.Do.reservation.ReservationSQLResult;
 import com.huawei.ibooking.bean.po.Reservation;
 import com.huawei.ibooking.bean.po.ReservationExample;
+
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,4 +38,10 @@ public interface ReservationMapper {
             @Param("startTime") String startTime,
             @Param("endTime") String endTime,
             @Param("orderByClause") String orderByClause);
+
+
+    int countConflictingReservations(@Param("seatId") Integer seatId,
+                                     @Param("startTime") Timestamp startTime,
+                                     @Param("endTime") Timestamp endTime,
+                                     @Param("hasSocket") Byte hasSocket);
 }

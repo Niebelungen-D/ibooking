@@ -3,16 +3,19 @@ package com.huawei.ibooking.serivce.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.huawei.ibooking.bean.Do.reservation.ReservationSQLResult;
-import com.huawei.ibooking.bean.po.Reservation;
-import com.huawei.ibooking.bean.po.ReservationExample;
-import com.huawei.ibooking.bean.po.Studyroom;
+import com.huawei.ibooking.bean.enums.CheckStatusEnum;
+import com.huawei.ibooking.bean.enums.SeatStatusEnum;
+import com.huawei.ibooking.bean.po.*;
 import com.huawei.ibooking.bean.vo.reservation.ReservationInformation;
 import com.huawei.ibooking.bean.vo.studyroom.StudyRoomInformation;
 import com.huawei.ibooking.mgb.mapper.ReservationMapper;
+import com.huawei.ibooking.mgb.mapper.SeatMapper;
 import com.huawei.ibooking.serivce.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,22 +28,15 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     ReservationMapper reservationMapper;
 
+    @Autowired
+    SeatMapper seatMapper;
+
     @Override
-    public PageInfo<ReservationInformation> selectByExample(ReservationExample example, int pageNum, int pageSize, String sort) {
+    public PageInfo<Reservation> selectByExample(ReservationExample example, int pageNum, int pageSize, String sort) {
         PageHelper.startPage(pageNum, pageSize);
         example.setOrderByClause(sort);
         List<Reservation> reservations = reservationMapper.selectByExample(example);
-        List<ReservationInformation> reservationInformationList = new ArrayList<>();
-        reservations.stream()
-                .map(reservation -> {
-                    ReservationInformation info = new ReservationInformation();
-                    info.setIsCheckin(reservation.getIsCheckin());
-                    info.setStartTime(reservation.getStartTime());
-                    info.setEndTime(reservation.getEndTime());
-                    return info;
-                })
-                .forEach(reservationInformationList::add);
-        return new PageInfo<>(reservationInformationList);
+        return new PageInfo<>(reservations);
     }
 
     @Override
@@ -75,7 +71,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public long countByExample(ReservationExample example) {
-        return 0;
+        return reservationMapper.countByExample(example);
     }
 
     @Override
@@ -95,6 +91,37 @@ public class ReservationServiceImpl implements ReservationService {
         return new PageInfo<>(reservationInformationList);
     }
 
+    @Override
+    public Boolean isReservationAvailable(Integer seatId, Timestamp startTime, Timestamp endTime) {
+        return reservationMapper.countConflictingReservations(seatId, startTime, endTime, (byte) 1) == 0;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class) // 声明事务，并指定回滚异常类型
+    public Boolean makeReservation(Integer buildingId, Integer seatId, Timestamp startTime, Timestamp endTime, Integer studyroomId, Integer userId) {
+
+        SeatExample example = new SeatExample();
+        SeatExample.Criteria criteria = example.createCriteria();
+        criteria.andSeatIdEqualTo(seatId);
+        criteria.andStudyroomIdEqualTo(studyroomId);
+
+        Seat seat = new Seat();
+        seat.setHasSocket(SeatStatusEnum.OPEN.getStatus());
+        int update = seatMapper.updateByExampleSelective(seat, example);
+
+        Reservation reservation = new Reservation();
+        reservation.setBuildingId(buildingId);
+        reservation.setSeatId(seatId);
+        reservation.setIsCheckin(CheckStatusEnum.CLOSE.getStatus());
+        reservation.setStartTime(startTime);
+        reservation.setEndTime(endTime);
+        reservation.setStudyroomId(studyroomId);
+        reservation.setUserId(userId);
+        int insert = reservationMapper.insert(reservation);
+
+        return update >=1 && insert >= 1;
+    }
+
     private List<ReservationInformation> convertToReservationInformationList(List<ReservationSQLResult> sqlResults) {
         return sqlResults.stream()
                 .map(this::convertToReservationInformation)
@@ -110,8 +137,8 @@ public class ReservationServiceImpl implements ReservationService {
         info.setStartTime(sqlResult.getStartTime() == null ? null : new Date(sqlResult.getStartTime().getTime()));
         info.setEndTime(sqlResult.getEndTime() == null ? null : new Date(sqlResult.getEndTime().getTime()));
         info.setIsCheckin(sqlResult.getIsCheckin());
-        info.setBuildingName(sqlResult.getBuildingName()); // 假设building_id是教学楼ID
-        info.setStudyroomNumber(sqlResult.getStudyroomId()); // 假设studyroom_id是自习室序号
+        info.setBuildingName(sqlResult.getBuildingName());
+        info.setStudyroomNumber(sqlResult.getStudyroomId());
         return info;
     }
 

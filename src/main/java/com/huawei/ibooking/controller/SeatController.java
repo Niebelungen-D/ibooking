@@ -1,6 +1,7 @@
 package com.huawei.ibooking.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.huawei.ibooking.bean.Do.seat.QuerySeatResult;
 import com.huawei.ibooking.bean.dto.seat.InsertSeatRequest;
 import com.huawei.ibooking.bean.dto.seat.SwitchSeatRequest;
 import com.huawei.ibooking.bean.enums.ResponseEnum;
@@ -17,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/seat")
@@ -28,27 +32,27 @@ public class SeatController {
 
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ApiOperation(value = "查询桌位", tags = "查询桌位")
-    public JsonResult<PageInfo<SeatInformation>> getSeatList(
-            @ApiParam(required = false) @RequestParam(name = "hasSocket", required = false) Byte hasSocket,
-            @ApiParam(required = false) @RequestParam(name = "seatId", required = false) Integer  seatId,
-            @ApiParam(required = false) @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
-            @ApiParam(required = false) @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-            @ApiParam(required = false) @RequestParam(name = "sort", defaultValue = "seat_id DESC") String sort
+    public JsonResult<List<QuerySeatResult>> getSeatList(
+//            @ApiParam(required = false) @RequestParam(name = "hasSocket", required = false) Byte hasSocket,
+//            @ApiParam(required = false) @RequestParam(name = "seatId", required = false) Integer  seatId,
+            @ApiParam(required = true) @RequestParam(name = "studyroomId", required = true) Integer studyroomId,
+            @ApiParam(required = true) @RequestParam(name = "startTime", required = true) Long startTime
+//            @ApiParam(required = false) @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
+//            @ApiParam(required = false) @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+//            @ApiParam(required = false) @RequestParam(name = "sort", defaultValue = "seat_id DESC") String sort
     ) {
-        SeatExample SeatExample = new SeatExample();
-        SeatExample.Criteria criteria = SeatExample.createCriteria();
-        if (!ObjectUtils.isEmpty(hasSocket)) {
-            criteria.andHasSocketEqualTo(hasSocket);
-        }
-
-        if (!ObjectUtils.isEmpty(seatId)) {
-            criteria.andStudyroomIdEqualTo(seatId);
-        }
-
-        PageInfo<SeatInformation> SeatInformationPageInfo = SeatService.selectByExample(SeatExample, pageNum, pageSize, sort);
-        return new JsonResult<>(SeatInformationPageInfo);
+        System.out.println(startTime);
+        Timestamp formatStartTime = new Timestamp(startTime);
+        List<QuerySeatResult> seatResultList = SeatService.getSeatBookingStatus(studyroomId, formatStartTime);
+        return new JsonResult<>(seatResultList);
 
     }
+
+//    public JsonResult<List<QuerySeatResult>> getSeatBookingStatus(
+//
+//    ) {
+//
+//    }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ApiOperation(value = "新增桌位", tags = "新增桌位")

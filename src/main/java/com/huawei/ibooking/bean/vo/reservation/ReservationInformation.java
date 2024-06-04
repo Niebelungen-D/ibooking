@@ -11,6 +11,9 @@ import java.util.Date;
 @Data
 public class ReservationInformation {
 
+    // 预约ID
+    private Integer rId;
+
     //预约人用户名
     private String username;
 

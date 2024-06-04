@@ -107,7 +107,7 @@ public class StudyRoomController {
         Studyroom studyroom = new Studyroom();
         studyroom.setRoomStatus(roomStatus);
         studyroom.setStudyroomId(studyroomId);
-        int update = studyroomService.updateByExample(studyroom, example);
+        int update = studyroomService.updateByExampleSelective(studyroom, example);
         if (update >= 1) {
             return new JsonResult<>(ResponseEnum.OPERATE_SUCCESS);
         } else {

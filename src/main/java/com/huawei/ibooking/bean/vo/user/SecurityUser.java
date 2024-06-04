@@ -6,6 +6,11 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class SecurityUser {
+    /*
+    *
+    * 用户ID
+    * */
+    private Long userId;
 
     /*
     * 用户名

@@ -1,7 +1,10 @@
 package com.huawei.ibooking.mgb.mapper;
 
+import com.huawei.ibooking.bean.Do.seat.QuerySeatResult;
 import com.huawei.ibooking.bean.po.Seat;
 import com.huawei.ibooking.bean.po.SeatExample;
+
+import java.sql.Timestamp;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +30,6 @@ public interface SeatMapper {
     int updateByPrimaryKeySelective(Seat row);
 
     int updateByPrimaryKey(Seat row);
+
+    List<QuerySeatResult> getSeatBookingStatus(@Param("studyroomId") Integer studyroomId, @Param("startTime") Timestamp startTime);
 }

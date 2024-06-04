@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.*;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -56,5 +57,19 @@ public class ReservationControllerTest {
                 .andExpect(status().isOk())
                 // 验证响应内容类型
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void test_timestamp() {
+        LocalDate today = LocalDate.now();
+
+        // 使用上海时区
+        ZoneId shanghaiZone = ZoneId.of("Asia/Shanghai");
+        ZonedDateTime startOfDayInShanghai = today.atStartOfDay(shanghaiZone);
+
+        // 转换为Instant并获取时间戳
+        Instant startOfDayInstant = startOfDayInShanghai.toInstant();
+        long startOfDayTimestamp = startOfDayInstant.toEpochMilli();
+        System.out.println("Start of the day in Shanghai timestamp: " + startOfDayTimestamp);
     }
 }

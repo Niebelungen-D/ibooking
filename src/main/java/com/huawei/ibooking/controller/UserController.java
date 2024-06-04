@@ -51,7 +51,8 @@ public class UserController {
         securityUser.setUserName(user.getUserName())
                 .setUserHeadimg(user.getUserHeadimg())
                 .setUserEmail(user.getUserEmail())
-                .setUserRole(user.getUserRole());
+                .setUserRole(user.getUserRole())
+                .setUserId(user.getUserId());
         return new JsonResult<>(securityUser);
     }
 

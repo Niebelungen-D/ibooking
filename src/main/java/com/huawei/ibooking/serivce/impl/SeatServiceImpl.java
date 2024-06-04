@@ -2,6 +2,7 @@ package com.huawei.ibooking.serivce.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.huawei.ibooking.bean.Do.seat.QuerySeatResult;
 import com.huawei.ibooking.bean.po.Seat;
 import com.huawei.ibooking.bean.po.SeatExample;
 import com.huawei.ibooking.bean.vo.Seat.SeatInformation;
@@ -10,6 +11,7 @@ import com.huawei.ibooking.serivce.SeatService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,11 +75,17 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public long countByExample(SeatExample example) {
-        return 0;
+        return seatMapper.countByExample(example);
     }
 
     @Override
     public int deleteByExample(SeatExample example) {
         return 0;
+    }
+
+    @Override
+    public List<QuerySeatResult> getSeatBookingStatus(Integer studyroomId, Timestamp startTime) {
+        System.out.println(startTime);
+        return seatMapper.getSeatBookingStatus(studyroomId, startTime);
     }
 }

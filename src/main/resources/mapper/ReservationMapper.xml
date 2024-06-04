@@ -284,6 +284,22 @@
       ORDER BY ${orderByClause}
     </if>
   </select>
+  <!-- 检查座位在指定时间段内是否已被预约 -->
+  <select id="countConflictingReservations" resultType="int">
+    SELECT COUNT(*)
+    FROM reservation
+    <where>
+      <if test="seatId != null and seatId != 0">
+        seat_id = #{seatId}
+      </if>
+      <if test="startTime != null">
+        AND end_time &gt; #{startTime}
+      </if>
+      <if test="endTime != null">
+        AND start_time &lt; #{endTime}
+      </if>
+    </where>
+  </select>
 
 
 </mapper>

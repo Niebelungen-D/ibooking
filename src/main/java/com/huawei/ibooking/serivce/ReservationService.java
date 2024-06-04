@@ -6,9 +6,12 @@ import com.huawei.ibooking.bean.po.Reservation;
 import com.huawei.ibooking.bean.po.ReservationExample;
 import com.huawei.ibooking.bean.vo.reservation.ReservationInformation;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 public interface ReservationService {
 
-    PageInfo<ReservationInformation> selectByExample(ReservationExample example, int pageNum, int pageSize, String sort);
+    PageInfo<Reservation> selectByExample(ReservationExample example, int pageNum, int pageSize, String sort);
 
     int insert(Reservation record);
 
@@ -45,5 +48,11 @@ public interface ReservationService {
             int pageNum,
             int pageSize,
             String orderByClause);
+
+
+    Boolean isReservationAvailable(Integer seatId, Timestamp startTime, Timestamp endTime);
+
+    Boolean makeReservation(Integer buildingId, Integer seatId, Timestamp startTime, Timestamp endTime, Integer studyroomId, Integer userId);
+
 
 }
