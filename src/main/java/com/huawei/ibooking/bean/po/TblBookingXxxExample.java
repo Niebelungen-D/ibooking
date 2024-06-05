@@ -3,14 +3,14 @@ package com.huawei.ibooking.bean.po;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeatExample {
+public class TblBookingXxxExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SeatExample() {
+    public TblBookingXxxExample() {
         oredCriteria = new ArrayList<>();
     }
 
@@ -104,243 +104,243 @@ public class SeatExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andSeatIdIsNull() {
-            addCriterion("seat_id is null");
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdIsNotNull() {
-            addCriterion("seat_id is not null");
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdEqualTo(Integer value) {
-            addCriterion("seat_id =", value, "seatId");
+        public Criteria andIdEqualTo(Integer value) {
+            addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdNotEqualTo(Integer value) {
-            addCriterion("seat_id <>", value, "seatId");
+        public Criteria andIdNotEqualTo(Integer value) {
+            addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdGreaterThan(Integer value) {
-            addCriterion("seat_id >", value, "seatId");
+        public Criteria andIdGreaterThan(Integer value) {
+            addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("seat_id >=", value, "seatId");
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdLessThan(Integer value) {
-            addCriterion("seat_id <", value, "seatId");
+        public Criteria andIdLessThan(Integer value) {
+            addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdLessThanOrEqualTo(Integer value) {
-            addCriterion("seat_id <=", value, "seatId");
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
+            addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdIn(List<Integer> values) {
-            addCriterion("seat_id in", values, "seatId");
+        public Criteria andIdIn(List<Integer> values) {
+            addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdNotIn(List<Integer> values) {
-            addCriterion("seat_id not in", values, "seatId");
+        public Criteria andIdNotIn(List<Integer> values) {
+            addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdBetween(Integer value1, Integer value2) {
-            addCriterion("seat_id between", value1, value2, "seatId");
+        public Criteria andIdBetween(Integer value1, Integer value2) {
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andSeatIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("seat_id not between", value1, value2, "seatId");
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketIsNull() {
-            addCriterion("has_socket is null");
+        public Criteria andSeatidIsNull() {
+            addCriterion("seatId is null");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketIsNotNull() {
-            addCriterion("has_socket is not null");
+        public Criteria andSeatidIsNotNull() {
+            addCriterion("seatId is not null");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketEqualTo(Byte value) {
-            addCriterion("has_socket =", value, "hasSocket");
+        public Criteria andSeatidEqualTo(Integer value) {
+            addCriterion("seatId =", value, "seatid");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketNotEqualTo(Byte value) {
-            addCriterion("has_socket <>", value, "hasSocket");
+        public Criteria andSeatidNotEqualTo(Integer value) {
+            addCriterion("seatId <>", value, "seatid");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketGreaterThan(Byte value) {
-            addCriterion("has_socket >", value, "hasSocket");
+        public Criteria andSeatidGreaterThan(Integer value) {
+            addCriterion("seatId >", value, "seatid");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketGreaterThanOrEqualTo(Byte value) {
-            addCriterion("has_socket >=", value, "hasSocket");
+        public Criteria andSeatidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("seatId >=", value, "seatid");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketLessThan(Byte value) {
-            addCriterion("has_socket <", value, "hasSocket");
+        public Criteria andSeatidLessThan(Integer value) {
+            addCriterion("seatId <", value, "seatid");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketLessThanOrEqualTo(Byte value) {
-            addCriterion("has_socket <=", value, "hasSocket");
+        public Criteria andSeatidLessThanOrEqualTo(Integer value) {
+            addCriterion("seatId <=", value, "seatid");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketIn(List<Byte> values) {
-            addCriterion("has_socket in", values, "hasSocket");
+        public Criteria andSeatidIn(List<Integer> values) {
+            addCriterion("seatId in", values, "seatid");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketNotIn(List<Byte> values) {
-            addCriterion("has_socket not in", values, "hasSocket");
+        public Criteria andSeatidNotIn(List<Integer> values) {
+            addCriterion("seatId not in", values, "seatid");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketBetween(Byte value1, Byte value2) {
-            addCriterion("has_socket between", value1, value2, "hasSocket");
+        public Criteria andSeatidBetween(Integer value1, Integer value2) {
+            addCriterion("seatId between", value1, value2, "seatid");
             return (Criteria) this;
         }
 
-        public Criteria andHasSocketNotBetween(Byte value1, Byte value2) {
-            addCriterion("has_socket not between", value1, value2, "hasSocket");
+        public Criteria andSeatidNotBetween(Integer value1, Integer value2) {
+            addCriterion("seatId not between", value1, value2, "seatid");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdIsNull() {
-            addCriterion("studyroom_id is null");
+        public Criteria andBookingperiodIsNull() {
+            addCriterion("bookingPeriod is null");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdIsNotNull() {
-            addCriterion("studyroom_id is not null");
+        public Criteria andBookingperiodIsNotNull() {
+            addCriterion("bookingPeriod is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdEqualTo(Integer value) {
-            addCriterion("studyroom_id =", value, "studyroomId");
+        public Criteria andBookingperiodEqualTo(Integer value) {
+            addCriterion("bookingPeriod =", value, "bookingperiod");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdNotEqualTo(Integer value) {
-            addCriterion("studyroom_id <>", value, "studyroomId");
+        public Criteria andBookingperiodNotEqualTo(Integer value) {
+            addCriterion("bookingPeriod <>", value, "bookingperiod");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdGreaterThan(Integer value) {
-            addCriterion("studyroom_id >", value, "studyroomId");
+        public Criteria andBookingperiodGreaterThan(Integer value) {
+            addCriterion("bookingPeriod >", value, "bookingperiod");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("studyroom_id >=", value, "studyroomId");
+        public Criteria andBookingperiodGreaterThanOrEqualTo(Integer value) {
+            addCriterion("bookingPeriod >=", value, "bookingperiod");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdLessThan(Integer value) {
-            addCriterion("studyroom_id <", value, "studyroomId");
+        public Criteria andBookingperiodLessThan(Integer value) {
+            addCriterion("bookingPeriod <", value, "bookingperiod");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdLessThanOrEqualTo(Integer value) {
-            addCriterion("studyroom_id <=", value, "studyroomId");
+        public Criteria andBookingperiodLessThanOrEqualTo(Integer value) {
+            addCriterion("bookingPeriod <=", value, "bookingperiod");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdIn(List<Integer> values) {
-            addCriterion("studyroom_id in", values, "studyroomId");
+        public Criteria andBookingperiodIn(List<Integer> values) {
+            addCriterion("bookingPeriod in", values, "bookingperiod");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdNotIn(List<Integer> values) {
-            addCriterion("studyroom_id not in", values, "studyroomId");
+        public Criteria andBookingperiodNotIn(List<Integer> values) {
+            addCriterion("bookingPeriod not in", values, "bookingperiod");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdBetween(Integer value1, Integer value2) {
-            addCriterion("studyroom_id between", value1, value2, "studyroomId");
+        public Criteria andBookingperiodBetween(Integer value1, Integer value2) {
+            addCriterion("bookingPeriod between", value1, value2, "bookingperiod");
             return (Criteria) this;
         }
 
-        public Criteria andStudyroomIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("studyroom_id not between", value1, value2, "studyroomId");
+        public Criteria andBookingperiodNotBetween(Integer value1, Integer value2) {
+            addCriterion("bookingPeriod not between", value1, value2, "bookingperiod");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberIsNull() {
-            addCriterion("seat_number is null");
+        public Criteria andStuidIsNull() {
+            addCriterion("stuId is null");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberIsNotNull() {
-            addCriterion("seat_number is not null");
+        public Criteria andStuidIsNotNull() {
+            addCriterion("stuId is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberEqualTo(Integer value) {
-            addCriterion("seat_number =", value, "seatNumber");
+        public Criteria andStuidEqualTo(Integer value) {
+            addCriterion("stuId =", value, "stuid");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberNotEqualTo(Integer value) {
-            addCriterion("seat_number <>", value, "seatNumber");
+        public Criteria andStuidNotEqualTo(Integer value) {
+            addCriterion("stuId <>", value, "stuid");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberGreaterThan(Integer value) {
-            addCriterion("seat_number >", value, "seatNumber");
+        public Criteria andStuidGreaterThan(Integer value) {
+            addCriterion("stuId >", value, "stuid");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberGreaterThanOrEqualTo(Integer value) {
-            addCriterion("seat_number >=", value, "seatNumber");
+        public Criteria andStuidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("stuId >=", value, "stuid");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberLessThan(Integer value) {
-            addCriterion("seat_number <", value, "seatNumber");
+        public Criteria andStuidLessThan(Integer value) {
+            addCriterion("stuId <", value, "stuid");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberLessThanOrEqualTo(Integer value) {
-            addCriterion("seat_number <=", value, "seatNumber");
+        public Criteria andStuidLessThanOrEqualTo(Integer value) {
+            addCriterion("stuId <=", value, "stuid");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberIn(List<Integer> values) {
-            addCriterion("seat_number in", values, "seatNumber");
+        public Criteria andStuidIn(List<Integer> values) {
+            addCriterion("stuId in", values, "stuid");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberNotIn(List<Integer> values) {
-            addCriterion("seat_number not in", values, "seatNumber");
+        public Criteria andStuidNotIn(List<Integer> values) {
+            addCriterion("stuId not in", values, "stuid");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberBetween(Integer value1, Integer value2) {
-            addCriterion("seat_number between", value1, value2, "seatNumber");
+        public Criteria andStuidBetween(Integer value1, Integer value2) {
+            addCriterion("stuId between", value1, value2, "stuid");
             return (Criteria) this;
         }
 
-        public Criteria andSeatNumberNotBetween(Integer value1, Integer value2) {
-            addCriterion("seat_number not between", value1, value2, "seatNumber");
+        public Criteria andStuidNotBetween(Integer value1, Integer value2) {
+            addCriterion("stuId not between", value1, value2, "stuid");
             return (Criteria) this;
         }
     }

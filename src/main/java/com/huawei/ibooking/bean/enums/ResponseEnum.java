@@ -83,6 +83,8 @@ public enum ResponseEnum {
 
     SEAT_NOT_EXIST("3039", "座位不存在"),
 
+    RESERVATION_NOT_EXIST("3040", "预约不存在"),
+
 
     //Client Error 4xxx  客户端错误  仿照4xx的http错误
     BAD_REQUEST("4000", "错误的请求参数"),

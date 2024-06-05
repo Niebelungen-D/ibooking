@@ -75,7 +75,8 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public long countByExample(SeatExample example) {
-        return seatMapper.countByExample(example);
+        long res = seatMapper.countByExample(example);
+        return res;
     }
 
     @Override

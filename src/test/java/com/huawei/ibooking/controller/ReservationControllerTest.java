@@ -11,7 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.sql.Timestamp;
 import java.time.*;
+import java.util.Calendar;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -61,15 +63,46 @@ public class ReservationControllerTest {
 
     @Test
     public void test_timestamp() {
+
+        // 获取当前日期
         LocalDate today = LocalDate.now();
 
         // 使用上海时区
         ZoneId shanghaiZone = ZoneId.of("Asia/Shanghai");
+
+        // 获取当天的开始时间
         ZonedDateTime startOfDayInShanghai = today.atStartOfDay(shanghaiZone);
 
+        // 获取当天的结束时间 23:59:59.999
+        LocalTime endOfDay = LocalTime.of(23, 59, 59, 999_999_999);
+        ZonedDateTime endOfDayInShanghai = ZonedDateTime.of(today, endOfDay, shanghaiZone);
+
         // 转换为Instant并获取时间戳
-        Instant startOfDayInstant = startOfDayInShanghai.toInstant();
-        long startOfDayTimestamp = startOfDayInstant.toEpochMilli();
-        System.out.println("Start of the day in Shanghai timestamp: " + startOfDayTimestamp);
+        long startOfDayInstant = startOfDayInShanghai.toInstant().toEpochMilli();
+        long endOfDayInstant = endOfDayInShanghai.toInstant().toEpochMilli();
+
+        // 打印结果
+        System.out.println("Start of Day in Shanghai: " + startOfDayInShanghai);
+        System.out.println("End of Day in Shanghai: " + endOfDayInShanghai);
+        System.out.println("Start of Day Instant (ms): " + startOfDayInstant);
+        System.out.println("End of Day Instant (ms): " + endOfDayInstant);
+    }
+
+
+    @Test
+    public void test_format_timestamp() {
+        Timestamp startTime = new Timestamp(1717566959000L);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(startTime);
+
+        // 将时间设置为当天的开始时间，精确到秒
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        // 格式化后的开始时间
+        Timestamp formattedStartTime = new Timestamp(cal.getTimeInMillis());
+        System.out.println(formattedStartTime);
     }
 }

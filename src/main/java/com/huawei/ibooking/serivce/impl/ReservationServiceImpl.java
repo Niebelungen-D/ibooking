@@ -51,7 +51,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation selectByPrimaryKey(Integer uuid) {
-        return null;
+        return reservationMapper.selectByPrimaryKey(uuid);
     }
 
     @Override

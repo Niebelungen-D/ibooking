@@ -13,4 +13,8 @@ public class SwitchSeatRequest {
 
     Byte hasSocket;
 
+    Integer seatNumber;
+
+    Integer studyroomId;
+
 }

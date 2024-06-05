@@ -13,4 +13,6 @@ public class InsertSeatRequest {
 
     private Integer studyroomId;
 
+    private Integer seatNumber;
+
 }

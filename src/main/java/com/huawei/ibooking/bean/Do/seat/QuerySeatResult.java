@@ -18,4 +18,6 @@ public class QuerySeatResult {
 
     Byte hasSocket;
 
+    Integer seatNumber;
+
 }

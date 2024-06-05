@@ -17,7 +17,6 @@ import java.sql.Timestamp;
 public class UpdateReservationRequest {
 
     @NotNull(message = "开始时间不能为空")
-    @Future(message = "开始时间必须在当前时间之后")
     private Timestamp startTime;
 
     @NotNull(message = "结束时间不能为空")
