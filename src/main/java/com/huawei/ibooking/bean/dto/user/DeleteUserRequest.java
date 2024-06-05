@@ -7,7 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class LoginRequest {
-    private String userName;
-    private String password;
+public class DeleteUserRequest {
+
+    Long userId;
+
 }
