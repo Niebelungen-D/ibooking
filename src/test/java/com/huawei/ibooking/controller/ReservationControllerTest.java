@@ -91,18 +91,19 @@ public class ReservationControllerTest {
 
     @Test
     public void test_format_timestamp() {
-        Timestamp startTime = new Timestamp(1717566959000L);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(startTime);
+        // 获取当前日期
+        LocalDate today = LocalDate.now();
 
-        // 将时间设置为当天的开始时间，精确到秒
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
+        // 使用上海时区
+        ZoneId shanghaiZone = ZoneId.of("Asia/Shanghai");
 
-        // 格式化后的开始时间
-        Timestamp formattedStartTime = new Timestamp(cal.getTimeInMillis());
-        System.out.println(formattedStartTime);
+        // 获取当天的开始时间
+        ZonedDateTime startOfDayInShanghai = today.atStartOfDay(shanghaiZone);
+
+        // 获取当天的结束时间 23:59:59.999
+        LocalTime endOfDay = LocalTime.of(23, 59, 59, 999_999_999);
+        ZonedDateTime endOfDayInShanghai = ZonedDateTime.of(today, endOfDay, shanghaiZone);
+        System.out.println(startOfDayInShanghai);
+        System.out.println(endOfDayInShanghai);
     }
 }

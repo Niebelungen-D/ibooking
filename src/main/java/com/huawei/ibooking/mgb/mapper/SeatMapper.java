@@ -32,4 +32,8 @@ public interface SeatMapper {
     int updateByPrimaryKey(Seat row);
 
     List<QuerySeatResult> getSeatBookingStatus(@Param("studyroomId") Integer studyroomId, @Param("startTime") Timestamp startTime);
+
+
+    List<QuerySeatResult> selectSeatsAndBookingStatus(@Param("studyroomId") Integer studyroomId, @Param("startTime") Timestamp startTime);
+
 }

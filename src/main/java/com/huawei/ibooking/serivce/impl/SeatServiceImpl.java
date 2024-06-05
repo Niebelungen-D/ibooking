@@ -87,6 +87,6 @@ public class SeatServiceImpl implements SeatService {
     @Override
     public List<QuerySeatResult> getSeatBookingStatus(Integer studyroomId, Timestamp startTime) {
         System.out.println(startTime);
-        return seatMapper.getSeatBookingStatus(studyroomId, startTime);
+        return seatMapper.selectSeatsAndBookingStatus(studyroomId, startTime);
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +37,10 @@ public class ReservationServiceImpl implements ReservationService {
         PageHelper.startPage(pageNum, pageSize);
         example.setOrderByClause(sort);
         List<Reservation> reservations = reservationMapper.selectByExample(example);
+        reservations.forEach(reservation -> {
+            reservation.setStartTime(addEightHoursToDate(reservation.getStartTime()));
+            reservation.setEndTime(addEightHoursToDate(reservation.getEndTime()));
+        });
         return new PageInfo<>(reservations);
     }
 
@@ -76,7 +81,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public int deleteByExample(ReservationExample example) {
-        return 0;
+        return reservationMapper.deleteByExample(example);
     }
 
     @Override
@@ -122,6 +127,11 @@ public class ReservationServiceImpl implements ReservationService {
         return update >=1 && insert >= 1;
     }
 
+    @Override
+    public List<Reservation> listAllReservation(ReservationExample example) {
+        return reservationMapper.selectByExample(example);
+    }
+
     private List<ReservationInformation> convertToReservationInformationList(List<ReservationSQLResult> sqlResults) {
         return sqlResults.stream()
                 .map(this::convertToReservationInformation)
@@ -142,5 +152,18 @@ public class ReservationServiceImpl implements ReservationService {
         return info;
     }
 
+
+    private Date addEightHoursToDate(Date date) {
+        if (date == null) {
+            return null;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        // 给分钟增加480分钟（8小时 * 60分钟）
+        calendar.add(Calendar.HOUR_OF_DAY, 8);
+
+        return calendar.getTime();
+    }
 
 }

@@ -228,5 +228,18 @@
     ) AS combined
   </select>
 
+  <select id="selectSeatsAndBookingStatus" resultMap="SeatStatusMap">
+    SELECT
+      s.seat_id, s.studyroom_id, s.seat_number, s.has_socket,
+      IF(r.seat_id IS NOT NULL, 'true', 'false') AS is_booking
+    FROM
+      seat s
+        LEFT JOIN
+      reservation r ON s.seat_id = r.seat_id
+        AND r.start_time = #{startTime}
+    WHERE
+      s.studyroom_id = #{studyroomId}
+  </select>
+
 
 </mapper>
