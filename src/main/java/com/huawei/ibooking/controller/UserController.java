@@ -1,6 +1,7 @@
 package com.huawei.ibooking.controller;
 
 import com.huawei.ibooking.bean.dto.user.LoginRequest;
+import com.huawei.ibooking.bean.dto.user.RegisterRequest;
 import com.huawei.ibooking.bean.enums.RoleEnum;
 import com.huawei.ibooking.bean.po.User;
 import com.huawei.ibooking.bean.po.UserExample;
@@ -58,11 +59,17 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public JsonResult<Object> register(
-            @ApiParam(required = true) @RequestParam(name = "username") String username,
-            @ApiParam(required = true) @RequestParam(name = "password") String password,
-            @ApiParam(required = true) @RequestParam(name = "useremail") String userEmail,
-            @ApiParam(required = true) @RequestParam(name = "userHeadimg") String userHeadimg
+            @ApiParam(required = true) @RequestBody RegisterRequest registerRequest
     ) {
+
+        String password = registerRequest.getPassword();
+        String username = registerRequest.getUsername();
+        String userHeadimg = registerRequest.getUserHeadimg();
+        String userEmail = registerRequest.getUserEmail();
+        if (ObjectUtils.isEmpty(password) || ObjectUtils.isEmpty(username) || ObjectUtils.isEmpty(userHeadimg) || ObjectUtils.isEmpty(userEmail)) {
+            return new JsonResult<>(ResponseEnum.BAD_REQUEST);
+        }
+
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andUserNameEqualTo(username);
