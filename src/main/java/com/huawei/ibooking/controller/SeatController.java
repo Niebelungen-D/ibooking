@@ -19,6 +19,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -45,8 +47,26 @@ public class SeatController {
 //            @ApiParam(required = false) @RequestParam(name = "sort", defaultValue = "seat_id DESC") String sort
     ) {
         System.out.println(startTime);
-        Timestamp formatStartTime = new Timestamp(startTime);
-        List<QuerySeatResult> seatResultList = seatService.getSeatBookingStatus(studyroomId, formatStartTime);
+        if (ObjectUtils.isEmpty(studyroomId) || ObjectUtils.isEmpty(startTime)) {
+            return new JsonResult<>(ResponseEnum.BAD_REQUEST);
+        }
+
+        if (!isValidTimestamp(startTime)) {
+            return new JsonResult<>("3000", "请传入毫秒级别的时间戳");
+        }
+
+        Timestamp temp = new Timestamp(startTime);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(temp);
+        // 将时间设置为当天的开始时间，精确到秒
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        // 格式化后的开始时间
+        Timestamp formattedStartTime = new Timestamp(cal.getTimeInMillis());
+
+        List<QuerySeatResult> seatResultList = seatService.getSeatBookingStatus(studyroomId, formattedStartTime);
         return new JsonResult<>(seatResultList);
 
     }
@@ -121,6 +141,7 @@ public class SeatController {
         SeatExample.Criteria criteria = example.createCriteria();
         criteria.andSeatNumberEqualTo(seatNumber);
         criteria.andStudyroomIdEqualTo(studyroomId);
+        criteria.andSeatIdNotEqualTo(seatId);
 
         Studyroom studyroom = studyroomService.selectByPrimaryKey(studyroomId);
         if (ObjectUtils.isEmpty(studyroom)) {
@@ -158,5 +179,10 @@ public class SeatController {
         return seatNumber >= 1 && seatNumber <= 1000;
     }
 
+
+    private boolean isValidTimestamp(Long timestamp) {
+        // 校验时间戳是否为纯数字
+        return String.valueOf(timestamp).length() == 13;
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.huawei.ibooking.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.huawei.ibooking.bean.dto.reservation.CancelReservationRequest;
 import com.huawei.ibooking.bean.dto.reservation.InsertReservationRequest;
 import com.huawei.ibooking.bean.dto.reservation.UpdateReservationRequest;
 import com.huawei.ibooking.bean.enums.CheckStatusEnum;
@@ -171,8 +172,14 @@ public class ReservationController {
         reservation.setBuildingId(buildingId);
         reservation.setUserId(userId);
 
-        cal.add(Calendar.DAY_OF_MONTH, 1);
-        reservation.setEndTime(new Timestamp(cal.getTimeInMillis()));
+        Calendar eTime = (Calendar) cal.clone(); // 克隆cal，避免修改原始startTime
+        // 设置endTime为当天的最后时间
+        eTime.set(Calendar.HOUR_OF_DAY, 23);
+        eTime.set(Calendar.MINUTE, 59);
+        eTime.set(Calendar.SECOND, 59);
+        eTime.set(Calendar.MILLISECOND, 0);
+
+        reservation.setEndTime(new Timestamp(eTime.getTimeInMillis()));
         if (reservationService.insert(reservation) >= 1) {
             return new JsonResult<>(ResponseEnum.OPERATE_SUCCESS);
         } else {
@@ -242,6 +249,34 @@ public class ReservationController {
 
         int update = reservationService.updateByExample(reservation, reservationExample1);
         if (update >= 1) {
+            return new JsonResult<>(ResponseEnum.OPERATE_SUCCESS);
+        } else {
+            return new JsonResult<>(ResponseEnum.OPERATE_FAILURE);
+        }
+
+    }
+
+
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    @ApiOperation(value = "取消预约", tags = "取消预约")
+    public JsonResult<Object> cancelReservation(
+            @ApiParam(required = true) @RequestBody CancelReservationRequest cancelReservationRequest
+    ) {
+        Integer reservationId = cancelReservationRequest.getReservationId();
+        Integer userId = cancelReservationRequest.getUserId();
+
+        if (ObjectUtils.isEmpty(reservationId) || ObjectUtils.isEmpty(userId)) {
+            return new JsonResult<>(ResponseEnum.BAD_REQUEST);
+        }
+
+        ReservationExample reservationExample = new ReservationExample();
+        ReservationExample.Criteria criteria = reservationExample.createCriteria();
+
+        criteria.andRIdEqualTo(reservationId);
+        criteria.andUserIdEqualTo(userId);
+
+        int i = reservationService.deleteByExample(reservationExample);
+        if (i >= 1) {
             return new JsonResult<>(ResponseEnum.OPERATE_SUCCESS);
         } else {
             return new JsonResult<>(ResponseEnum.OPERATE_FAILURE);

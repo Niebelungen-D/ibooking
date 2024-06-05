@@ -8,6 +8,7 @@ import com.huawei.ibooking.bean.vo.reservation.ReservationInformation;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 public interface ReservationService {
 
@@ -54,5 +55,7 @@ public interface ReservationService {
 
     Boolean makeReservation(Integer buildingId, Integer seatId, Timestamp startTime, Timestamp endTime, Integer studyroomId, Integer userId);
 
+
+    List<Reservation> listAllReservation(ReservationExample example);
 
 }
