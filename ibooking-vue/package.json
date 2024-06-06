@@ -9,31 +9,26 @@
   },
   "dependencies": {
     "body-parser": "^1.4.3",
+    "bootstrap": "^3.3.7",
     "cors": "^2.8.5",
+    "element-ui": "legacy",
     "express": "^4.4.5",
-    "vue": "^2.0.1",
-    "element-ui": "legacy"
+    "vue": "^2.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
+    "babel-preset-es2015": "^6.0.0",
     "babel-preset-vue-app": "^1.2.0",
     "cross-env": "^1.0.6",
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
     "style-loader": "^0.13.1",
-    "vue-loader": "^9.8.0",
-    "webpack": "beta",
-    "webpack-dev-server": "beta",
-
-
-
-
-    "babel-preset-es2015": "^6.0.0",
-
-
     "vue-cookies": "^1.8.4",
+    "vue-loader": "^9.8.0",
     "vue-resource": "^1.0.3",
-    "vue-router": "^2.0.1"
+    "vue-router": "^2.0.1",
+    "webpack": "beta",
+    "webpack-dev-server": "beta"
   }
 }
