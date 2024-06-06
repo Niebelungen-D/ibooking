@@ -15,6 +15,28 @@
         </div>
 
         <div class="form-group">
+          <label name="student_email">邮箱</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="post_data.userEmail"
+            id="student_email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label name="student_headimg">上传头像</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="post_data.userHeadimg"
+            id="student_headimg"
+            required
+          />
+        </div>
+
+        <div class="form-group">
           <label name="password">密码</label>
           <input
             type="password"
@@ -31,7 +53,7 @@
             type="password"
             class="form-control"
             v-model="post_data.userPwdAgain"
-            id="password"
+            id="password_again"
             required
           />
         </div>
@@ -56,7 +78,9 @@ export default {
             post_data:{
                 userName:"",
                 userPwd:"",
-                userPwdAgain:""
+                userPwdAgain:"",
+                userEmail:"",
+                userHeadimg:""
             },
             notifications:[]
         }
@@ -70,10 +94,21 @@ export default {
           });
         return
       }
-      var url = meta.url + "/api/register";
+      var url = meta.url + "/auth/register";
       var that = this;
+      console.log({
+          username:this.post_data.userName,
+          password:this.post_data.userPwd,
+          userEmail:this.post_data.userEmail,
+          userHeadimg:this.post_data.userHeadimg
+          })
       this.$http
-        .post(url, {username:this.post_data.userName,password:this.post_data.userPwd}, {
+        .post(url, {
+          userName:this.post_data.userName,
+          password:this.post_data.userPwd,
+          userEmail:this.post_data.userEmail,
+          userHeadimg:this.post_data.userHeadimg
+          }, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -81,33 +116,19 @@ export default {
         .then(
           (response) => {
             console.log("register response=", response);
-            if (response.body.status == true){
+            
+            if (response.body.code == "2001"){
               var data = response.body.data;
-              if (data.userPermission == "user"){
-                user_store.userType = 'student';
-              }
-              else{
-                user_store.userType = 'admin';
-              }
-              user_store.id = data.userId;
-              user_store.name = that.post_data.userName;
-              user_store.password = that.post_data.userPwd;
               this.notifications.push({
                 type: 'success',
                 message: "注册成功",
               });
-              //console.log("headers=", response.headers);
-              that.$cookies.set("id", user_store.id);
-              that.$cookies.set("userName", that.post_data.userName);
-              that.$cookies.set("userType", user_store.userType);
-              user_store.log_status = 1;
-              this.$router.push({name:'index'});
+              this.$router.push({name:'login'});
             }
             else{
               var msg = response.body.msg;
               this.notifications.push({type: "danger", message:msg});
             }
-
           },
           (response) => {
             this.notifications.push({

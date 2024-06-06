@@ -11,7 +11,7 @@
     <notification v-bind:notifications="notifications"></notification>
 
     <form v-on:submit.prevent="addStudent">
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label name="student_id">ID</label>
         <input
           type="text"
@@ -20,39 +20,74 @@
           v-model="student.id"
           id="student_id"
         />
-      </div>
+      </div> -->
 
       <div class="form-group">
-        <label name="student_number">学号</label>
+        <label name="student_number">用户名</label>
         <input
           type="text"
           class="form-control"
-          v-model="student.stuNum"
+          v-model="student.userName"
           id="student_number"
           required
         />
       </div>
 
       <div class="form-group">
-        <label name="student_name">姓名</label>
+        <label name="student_email">用户邮箱</label>
         <input
           type="text"
           class="form-control"
-          v-model="student.name"
-          id="student_name"
+          v-model="student.userEmail"
+          id="student_email"
           required
         />
       </div>
 
       <div class="form-group">
-        <label name="student_password">密码</label>
+        <label name="student_headimg">用户头像</label>
         <input
-          type="password"
+          type="text"
           class="form-control"
-          v-model="student.password"
-          id="student_password"
+          v-model="student.userHeadimg"
+          id="student_headimg"
           required
         />
+      </div>
+
+      <div class="form-group">
+        <label name="student_pwd">用户密码</label>
+        <input
+          type="text"
+          class="form-control"
+          v-model="student.password"
+          id="student_pwd"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label name="student_role">用户角色</label>
+        <label class="radio-inline">
+          <input
+            type="radio"
+            name="inlineRadioOptions"
+            id="inlineRadio1"
+            value="1"
+            v-model="student.userRole"
+          />
+          管理员
+        </label>
+        <label class="radio-inline">
+          <input
+            type="radio"
+            name="inlineRadioOptions"
+            id="inlineRadio2"
+            value="0"
+            v-model="student.userRole"
+          />
+          普通用户
+        </label>
       </div>
 
       <div class="form-group">
@@ -64,7 +99,7 @@
 
 <script>
 import Notification from "./notifications.vue";
-
+import { user_store, studyRoom_store, meta, seat_store } from "./data.js";
 export default {
   data() {
     return {
@@ -75,12 +110,23 @@ export default {
 
   methods: {
     addStudent: function () {
+      var url = meta.url + "/auth/insert";
       this.$http
-        .post("http://localhost:8090/student", this.student, {
-          headers: {
-            "Content-Type": "application/json",
+        .post(
+          url,
+          {
+            userName: this.student.userName,
+            userEmail: this.student.userEmail,
+            userHeadimg: this.student.userHeadimg,
+            password: this.student.password,
+            userRole: this.student.userRole,
           },
-        })
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then(
           (response) => {
             this.notifications.push({
